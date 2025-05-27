@@ -131,7 +131,7 @@ fun LoginScreen(navegacao: NavHostController?) {
                     colors = ButtonDefaults.buttonColors(
                         Color(0xffc1121f)
                     ),
-                    modifier = Modifier.padding(top = 25.dp).width(150.dp).height(50.dp),
+                    modifier = Modifier.padding(top = 25.dp).width(150.dp).height(50.dp).clickable { navegacao?.navigate("feed") },
                     shape = RoundedCornerShape(5.dp)
                 ){
                     Text(

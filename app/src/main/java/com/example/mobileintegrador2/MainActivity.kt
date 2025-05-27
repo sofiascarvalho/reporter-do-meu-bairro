@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mobileintegrador2.screens.HomeScreen
 import com.example.mobileintegrador2.screens.LoginScreen
 import com.example.mobileintegrador2.screens.RegisterScreen
 import com.example.mobileintegrador2.ui.theme.MobileIntegrador2Theme
@@ -31,6 +32,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = "home") { RegisterScreen(navegacao) }
                     composable(route = "login") { LoginScreen(navegacao) }
+                    composable(route = "feed") { HomeScreen(navegacao) }
                 }
             }
         }
