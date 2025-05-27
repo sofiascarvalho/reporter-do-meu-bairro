@@ -144,18 +144,6 @@ fun LoginScreen(navegacao: NavHostController?) {
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                Button(
-                    onClick = {
-                        if (nameState.value.isEmpty()){
-                            isErrorState.value=true
-                        }else{
-                            navegacao!!.navigate("register")
-                        }
-                    },
-
-                ) { }
-
-                Spacer(modifier = Modifier.height(36.dp))
 
                 Text(text = "Stay disconnected", color = Color(0xffc1121f), textDecoration = TextDecoration.Underline)
             }

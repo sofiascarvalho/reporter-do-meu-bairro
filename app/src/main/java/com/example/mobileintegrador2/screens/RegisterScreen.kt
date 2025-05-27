@@ -1,5 +1,6 @@
 package com.example.mobileintegrador2.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -20,13 +21,26 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mobileintegrador2.R
+import com.example.mobileintegrador2.model.User
+import com.example.mobileintegrador2.model.UserRequest
+import com.example.mobileintegrador2.services.RetrofitFactory
+import androidx.compose.ui.platform.LocalContext
+
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 @Composable
 fun RegisterScreen(navegacao: NavHostController?) {
+
+    val context = LocalContext.current
+
+
     val nomeState = remember { mutableStateOf("") }
-    val telefoneState = remember { mutableStateOf("") }
     val emailState = remember { mutableStateOf("") }
     val senhaState = remember { mutableStateOf("") }
+
+
 
     Box(modifier = Modifier.fillMaxSize()) {
         Image(
@@ -36,7 +50,9 @@ fun RegisterScreen(navegacao: NavHostController?) {
             contentScale = ContentScale.Crop
         )
 
-        Box(modifier = Modifier.fillMaxSize().background(Color(0xbb000000)))
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(Color(0xbb000000)))
 
         Column(
             modifier = Modifier
@@ -66,7 +82,6 @@ fun RegisterScreen(navegacao: NavHostController?) {
                 Spacer(modifier = Modifier.height(130.dp))
 
                 CustomTextField(value = nomeState.value, onValueChange = { nomeState.value = it }, label = "Nome")
-                CustomTextField(value = telefoneState.value, onValueChange = { telefoneState.value = it }, label = "Telefone")
                 CustomTextField(value = emailState.value, onValueChange = { emailState.value = it }, label = "Email")
                 CustomTextField(value = senhaState.value, onValueChange = { senhaState.value = it }, label = "Senha", isPassword = true)
 
@@ -74,8 +89,29 @@ fun RegisterScreen(navegacao: NavHostController?) {
 
                 Button(
                     onClick = {
-                        println("Usuário registrado: ${nomeState.value}, ${telefoneState.value}, ${emailState.value}")
-                        // navegacao?.navigate("home")
+                        val user = UserRequest(
+                            nome = nomeState.value,
+                            email = emailState.value,
+                            senha = senhaState.value
+                        )
+                        val call=RetrofitFactory()
+                            .getUserService()
+                            .registerUser(user)
+
+                        call.enqueue(object : Callback<User> {
+                            override fun onResponse(call: Call<User>, response: Response<User>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(context, "Registrado com sucesso!", Toast.LENGTH_SHORT).show()
+                                    navegacao?.navigate("login")
+                                } else {
+                                    Toast.makeText(context, "Erro ao registrar!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<User>, t: Throwable) {
+                                Toast.makeText(context, "Falha na conexão!", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     },
                     colors = ButtonDefaults.buttonColors(Color(0xffc1121f)),
                     modifier = Modifier
@@ -117,7 +153,7 @@ fun CustomTextField(value: String, onValueChange: (String) -> Unit, label: Strin
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,
-        label = { Text(text = label) },
+        label = { Text(text = label, color = Color.White) },
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 14.dp)
