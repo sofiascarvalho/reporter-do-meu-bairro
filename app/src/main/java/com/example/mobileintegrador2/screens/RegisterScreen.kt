@@ -25,6 +25,9 @@ import com.example.mobileintegrador2.model.User
 import com.example.mobileintegrador2.model.UserRequest
 import com.example.mobileintegrador2.services.RetrofitFactory
 import androidx.compose.ui.platform.LocalContext
+import android.util.Log
+import androidx.compose.ui.res.colorResource
+
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -60,7 +63,7 @@ fun RegisterScreen(navegacao: NavHostController?) {
                 .padding(16.dp)
         ) {
             Icon(
-                painter = painterResource(R.drawable.logo),
+                painter = painterResource(R.drawable.logo_nova),
                 contentDescription = null,
                 tint = Color(0xcffc1121),
                 modifier = Modifier.size(75.dp)
@@ -81,7 +84,7 @@ fun RegisterScreen(navegacao: NavHostController?) {
 
                 Spacer(modifier = Modifier.height(130.dp))
 
-                CustomTextField(value = nomeState.value, onValueChange = { nomeState.value = it }, label = "Nome")
+                CustomTextField(value = nomeState.value, onValueChange = { nomeState.value = it }, label = "Nome", )
                 CustomTextField(value = emailState.value, onValueChange = { emailState.value = it }, label = "Email")
                 CustomTextField(value = senhaState.value, onValueChange = { senhaState.value = it }, label = "Senha", isPassword = true)
 
@@ -107,11 +110,14 @@ fun RegisterScreen(navegacao: NavHostController?) {
                                     Toast.makeText(context, "Erro ao registrar!", Toast.LENGTH_SHORT).show()
                                 }
                             }
-
                             override fun onFailure(call: Call<User>, t: Throwable) {
+                                Log.e("RetrofitError", "Erro na conexão", t) // Imprime no Logcat o erro real
                                 Toast.makeText(context, "Falha na conexão!", Toast.LENGTH_SHORT).show()
                             }
+
                         })
+
+                        navegacao!!.navigate("login")
                     },
                     colors = ButtonDefaults.buttonColors(Color(0xffc1121f)),
                     modifier = Modifier
@@ -157,11 +163,13 @@ fun CustomTextField(value: String, onValueChange: (String) -> Unit, label: Strin
         shape = RoundedCornerShape(8.dp),
         modifier = Modifier
             .padding(horizontal = 20.dp, vertical = 14.dp)
-            .height(45.dp)
+            .height(60.dp)
             .width(322.dp),
         colors = OutlinedTextFieldDefaults.colors(
             focusedBorderColor = Color.White,
-            unfocusedBorderColor = Color.White
+            unfocusedBorderColor = Color.White,
+            focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White
         ),
         visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None
     )

@@ -3,6 +3,7 @@ package com.example.mobileintegrador2.screens
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -72,7 +73,7 @@ fun LoginScreen(navegacao: NavHostController?) {
         ){
             Icon(
                 painter = painterResource(
-                    R.drawable.logo
+                    R.drawable.logo_nova
                 ),
                 contentDescription = "",
                 tint = Color(0xcffc1121),
@@ -118,7 +119,9 @@ fun LoginScreen(navegacao: NavHostController?) {
                         .width(322.dp),
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = Color(0xffffffff),
-                        unfocusedBorderColor = Color(0xffffffff)
+                        unfocusedBorderColor = Color(0xffffffff),
+                        focusedTextColor = Color.White,
+                        unfocusedTextColor = Color.White
                     )
                 )
 
@@ -140,7 +143,10 @@ fun LoginScreen(navegacao: NavHostController?) {
 
                 Spacer(modifier = Modifier.height(26.dp))
 
-                Text(text = "Already have an account?", color = Color.White)
+                Text(text = "Already have an account?", color = Color.White,
+                    modifier = Modifier.clickable {
+                    navegacao?.navigate("home")
+                })
 
                 Spacer(modifier = Modifier.height(6.dp))
 

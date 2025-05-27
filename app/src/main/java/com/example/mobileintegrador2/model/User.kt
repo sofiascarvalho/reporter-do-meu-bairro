@@ -1,7 +1,7 @@
 package com.example.mobileintegrador2.model
 
 data class User(
-    val id: Int,
-    val nome:String,
-    val email:String
+    val status: Boolean,
+    val status_code: Int,
+    val message:String
 )

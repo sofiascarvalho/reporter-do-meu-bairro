@@ -7,7 +7,6 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface UserService {
-        @POST("http://10.107.134.3:8080/v1/controle-usuario/usuario")
+        @POST("usuario")
         fun registerUser(@Body user: UserRequest): Call<User>
-
 }

@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MobileIntegrador2Theme {
-                var navegacao = rememberNavController()
+                val navegacao = rememberNavController()
                 NavHost(
                     navController = navegacao,
                     startDestination = "home"
