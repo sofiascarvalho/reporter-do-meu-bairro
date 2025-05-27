@@ -56,4 +56,18 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //Dependencia de navegação entre telas
+    implementation("androidx.navigation:navigation-compose:2.8.9")
+
+    //retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    //gson - converter
+    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+
 }
