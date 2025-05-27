@@ -21,12 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mobileintegrador2.R
-import com.example.mobileintegrador2.model.User
 import com.example.mobileintegrador2.model.UserRequest
 import com.example.mobileintegrador2.services.RetrofitFactory
 import androidx.compose.ui.platform.LocalContext
 import android.util.Log
-import androidx.compose.ui.res.colorResource
 
 
 import retrofit2.Call
@@ -101,18 +99,16 @@ fun RegisterScreen(navegacao: NavHostController?) {
                             .getUserService()
                             .registerUser(user)
 
-                        call.enqueue(object : Callback<User> {
-                            override fun onResponse(call: Call<User>, response: Response<User>) {
+                        call.enqueue(object : Callback<UserRequest> {
+                            override fun onResponse(call: retrofit2.Call<UserRequest>, response: retrofit2.Response<UserRequest>) {
                                 if (response.isSuccessful) {
-                                    Toast.makeText(context, "Registrado com sucesso!", Toast.LENGTH_SHORT).show()
-                                    navegacao?.navigate("login")
+                                    Log.i("API", "Usuário cadastrado com sucesso: ${response.body()}")
                                 } else {
-                                    Toast.makeText(context, "Erro ao registrar!", Toast.LENGTH_SHORT).show()
+                                    Log.e("API", "Erro ao cadastrar: ${response.code()}")
                                 }
                             }
-                            override fun onFailure(call: Call<User>, t: Throwable) {
-                                Log.e("RetrofitError", "Erro na conexão", t) // Imprime no Logcat o erro real
-                                Toast.makeText(context, "Falha na conexão!", Toast.LENGTH_SHORT).show()
+                            override fun onFailure(call: retrofit2.Call<UserRequest>, t: Throwable) {
+                                Log.e("API", "Falha na requisição: ${t.message}")
                             }
 
                         })
