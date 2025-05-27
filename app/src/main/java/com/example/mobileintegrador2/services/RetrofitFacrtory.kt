@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
 
 object RetrofitFactory {
-    private val BASE_URL = "http://10.0.2.2:3030/"
+    private val BASE_URL = "http://localhost:3030/v1/controle-usuario/usuario/email"
 
     private val RETROFIT_FACTORY = Retrofit
             .Builder()
